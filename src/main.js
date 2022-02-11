@@ -5,6 +5,7 @@ function renderCart() {
     // clearing out the existing table
     $("#cart").empty()
     var markup = `
+    ${cart.length > 0 ? `<button class="emptyCart">Empty Cart</button>` : ``}
         <table>
             <thead>
             <tr>
@@ -13,6 +14,7 @@ function renderCart() {
                 <td>name</td>
                 <td>price</td>
                 <td>quantity</td>
+                <td>remove</td>
             </tr>
             </thead>
     `
@@ -29,6 +31,7 @@ function renderCart() {
             <input type="number" style="display:none;">
             <button style="display:none;" id="addQuantity">Add</button>
             </td>
+            <td><a href="#" data=${i.id} id="delete">X</a></td>
         </tr>
         </tbody>
         `
@@ -96,6 +99,18 @@ function addToCart(id) {
     }
     console.log(cart)
 }
+function removeProductFromCartById(id) {
+    let index = 0
+    cart.forEach(i => {
+        if (i.id == id) {
+            cart.splice(index, 1)
+            renderCart()
+            return true
+        }
+        index++
+    })
+    return false
+}
 //binding events
 $(".add-to-cart").click(function (e) {
     e.preventDefault()
@@ -124,4 +139,18 @@ $("body").on("click", "#addQuantity", function () {
     else {
         renderCart()
     }
+})
+
+// delete event
+$("body").on("click", "#delete", function (e) {
+    e.preventDefault()
+    removeProductFromCartById(parseInt($(this).attr("data")))
+})
+
+//empty the cart
+$("body").on("click", ".emptyCart", function () {
+    cart = []
+    $(this).remove()
+    // alert($(this).text())
+    renderCart()
 })
