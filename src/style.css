@@ -143,3 +143,21 @@ body{
 	border-radius: 5px;
 	border: 1px solid #cccccc; 
 }
+
+/* cart table */
+#cart{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#cart table{
+	width: 50%;
+    text-transform: capitalize;
+    font-size: 1rem;
+	border-collapse: collapse;
+}
+#cart table td{
+	text-align: center;
+	padding: 10px ;
+	border-bottom: 2px solid black;
+}
