@@ -161,3 +161,6 @@ body{
 	padding: 10px ;
 	border-bottom: 2px solid black;
 }
+#cart table tbody tr td input {
+	max-width: 30px;
+}

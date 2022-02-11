@@ -24,7 +24,11 @@ function renderCart() {
             <td><img src="images/${i.image}" width="40px" height="40px"></td>
             <td>${i.name}</td>
             <td>${i.price}</td>
-            <td>${i.quantity}</td>
+            <td>
+            <span>${i.quantity} <a href="#" data="${i.id}" id="editQuantity">edit</a></span>
+            <input type="number" style="display:none;">
+            <button style="display:none;" id="addQuantity">Add</button>
+            </td>
         </tr>
         </tbody>
         `
@@ -93,9 +97,31 @@ function addToCart(id) {
     console.log(cart)
 }
 //binding events
-$(".add-to-cart").click(function () {
+$(".add-to-cart").click(function (e) {
+    e.preventDefault()
     var id = $(this).attr("data")
     console.log(fetchProductsByProperties(products, "id", id))
     addToCart(id)
 
+})
+
+$("body").on("click", "#editQuantity", function (e) {
+    e.preventDefault()
+    // alert($(this).parent().text())
+    $(this).parent().css("display", "none")
+    $(this).parent().next().css("display", "")
+    $(this).parent().next().next().css("display", "")
+})
+
+// binding events on add quantity button
+$("body").on("click", "#addQuantity", function () {
+    var id = $(this).prev().prev().children().attr("data")
+    var quantity = parseInt($(this).prev().val())
+    if (!isNaN(quantity)) {
+        increaseQuantityById(cart, id, quantity)
+        renderCart()
+    }
+    else {
+        renderCart()
+    }
 })
