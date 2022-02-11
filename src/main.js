@@ -14,6 +14,7 @@ function renderCart() {
                 <td>name</td>
                 <td>price</td>
                 <td>quantity</td>
+                <td>Total</td>
                 <td>remove</td>
             </tr>
             </thead>
@@ -31,13 +32,22 @@ function renderCart() {
             <input type="number" style="display:none;">
             <button style="display:none;" id="addQuantity">Add</button>
             </td>
+            <td>${i.price * i.quantity}</td>
             <td><a href="#" data=${i.id} id="delete">X</a></td>
         </tr>
         </tbody>
         `
     })
-    markup += `</table>`
+    markup += `</table>
+    ${cart.length > 0 ? `<h2 style="margin:10px">Total ${getTotal()}$</h2>` : ``}`
     $("#cart").append(markup)
+}
+function getTotal() {
+    var total = 0
+    cart.forEach(i => {
+        total += i.quantity * i.price
+    })
+    return total
 }
 function renderProducts() {
     var markup = ''
